@@ -9,11 +9,18 @@ public final class SecureStorage {
     }
     
     let keychain: Keychain
+    let access: Accessability
     let encoder: Encoder
     let decoder: Decoder
 
-    public init(keychain: Keychain = KeychainSwift(), encoder: Encoder = JSONEncoder(), decoder: JSONDecoder = JSONDecoder()) {
+    public init(
+        keychain: Keychain = KeychainSwift(),
+        access: Accessability = .accessibleWhenUnlocked,
+        encoder: Encoder = JSONEncoder(),
+        decoder: JSONDecoder = JSONDecoder()
+    ) {
         self.keychain = keychain
+        self.access = access
         self.encoder = encoder
         self.decoder = decoder
     }
@@ -25,10 +32,10 @@ public final class SecureStorage {
         return try decoder.decode(T.self, from: data)
     }
     
-    public func store<T: Encodable>(_ object: T, for key: String, with access: Accessability) throws {
+    public func store<T: Encodable>(_ object: T, for key: String, with overrideAccess: Accessability? = nil) throws {
         let data = try encoder.encode(object)
         
-        if !keychain.set(data, forKey: key, with: access) {
+        if !keychain.set(data, forKey: key, with: overrideAccess ?? self.access) {
             throw Error.storageError
         }
     }
