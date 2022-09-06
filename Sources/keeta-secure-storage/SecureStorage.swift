@@ -17,7 +17,7 @@ public final class SecureStorage {
         keychain: Keychain = KeychainSwift(),
         access: Accessability = .accessibleWhenUnlocked,
         encoder: Encoder = JSONEncoder(),
-        decoder: JSONDecoder = JSONDecoder()
+        decoder: Decoder = JSONDecoder()
     ) {
         self.keychain = keychain
         self.access = access
