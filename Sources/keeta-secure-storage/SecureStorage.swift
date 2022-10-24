@@ -39,4 +39,8 @@ public final class SecureStorage {
             throw Error.storageError
         }
     }
+    
+    public func removeValue(for key: String) {
+        keychain.delete(key)
+    }
 }
