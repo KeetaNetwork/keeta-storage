@@ -6,6 +6,8 @@ public protocol Keychain {
     func getData(_ key: String) -> Data?
     @discardableResult
     func delete(_ key: String) -> Bool
+    @discardableResult
+    func clear() -> Bool
 }
 
 public enum Accessability {
